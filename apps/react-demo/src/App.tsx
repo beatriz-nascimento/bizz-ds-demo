@@ -153,7 +153,6 @@ function TagDemo() {
               Tag dismissed! <button onClick={() => setDismissed(false)}>Restore</button>
             </div>
           ) : (
-            /* @ts-expect-error */
             <bizz-tag ref={setRef} color={color} dismissible={dismissible || undefined}>
               {label}
             </bizz-tag>
@@ -222,7 +221,6 @@ function InputDemo() {
 
       <div className="demo-card">
         <div className="demo-preview">
-          {/* @ts-expect-error */}
           <bizz-input
             ref={setRef}
             label="Email address"

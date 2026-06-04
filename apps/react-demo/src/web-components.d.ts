@@ -18,6 +18,11 @@ type WebComponentProps<T extends HTMLElement> = Partial<T> &
   React.HTMLAttributes<T> & {
     class?: string;
     style?: React.CSSProperties;
+    // `ref` and `key` are React-internal props not covered by HTMLAttributes.
+    // Without these, TypeScript errors when you pass ref={...} or key={...}
+    // to a custom element.
+    ref?: React.Ref<T> | ((el: T | null) => void);
+    key?: React.Key;
   };
 
 declare global {
