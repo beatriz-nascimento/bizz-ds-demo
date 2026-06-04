@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bizz-components: Interactive Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- For local dev: change to ../dist/bizz-components/web/index.js -->
+  <script type="module" src="https://unpkg.com/bizz-components@0.2.0/web/index.js"></script>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-brand">
+      <h1>bizz-components</h1>
+      <span class="version-badge">v0.2.0</span>
+    </div>
+    <div class="header-links">
+      <a href="https://github.com/beatrizsn/bizz-design-system" target="_blank">GitHub ↗</a>
+      <a href="https://www.npmjs.com/package/bizz-components" target="_blank">npm ↗</a>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        <span id="themeIcon">🌙</span> Dark mode
+      </button>
+    </div>
+  </header>
+
+  <div class="token-bar">
+    <span class="token-bar-label">Theme tokens</span>
+    <div class="token-swatches" id="swatches"></div>
+    <button class="token-reset" onclick="resetTokens()">Reset</button>
+  </div>
+
+  <aside>
+    <div class="nav-section-label">Foundation</div>
+    <a href="#typography" class="nav-link">Typography</a>
+    <a href="#tokens"     class="nav-link">Color Tokens</a>
+
+    <div class="nav-section-label">Components</div>
+    <a href="#button"   class="nav-link">Button</a>
+    <a href="#tag"      class="nav-link">Tag</a>
+    <a href="#card"     class="nav-link">Card</a>
+    <a href="#input"    class="nav-link">Input</a>
+    <a href="#textarea" class="nav-link">Textarea</a>
+  </aside>
+
+  <main>
+
+    <!-- typography -->
+    <section class="section" id="typography">
+      <div class="section-header">
+        <h2 class="section-title">Typography <span class="tag-pill">CSS classes</span></h2>
+        <p class="section-desc">Typography is delivered as utility classes, not web components - apply them to any HTML element. Font: IBM Plex Sans.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-preview preview-column" style="gap: 0; padding: 1.5rem 2rem;">
+          <div class="type-row"><span class="type-meta">.bizz-h1</span><span class="bizz-h1" style="font-size:2rem">Heading 1</span></div>
+          <div class="type-row"><span class="type-meta">.bizz-h2</span><span class="bizz-h2" style="font-size:1.6rem">Heading 2</span></div>
+          <div class="type-row"><span class="type-meta">.bizz-h3</span><span class="bizz-h3" style="font-size:1.3rem">Heading 3</span></div>
+          <div class="type-row"><span class="type-meta">.bizz-h4</span><span class="bizz-h4">Heading 4</span></div>
+          <div class="type-row"><span class="type-meta">.bizz-body-lg</span><span class="bizz-body-lg">Body Large - design systems help teams build consistently</span></div>
+          <div class="type-row"><span class="type-meta">.bizz-body</span><span class="bizz-body">Body - design systems help teams build consistently</span></div>
+          <div class="type-row"><span class="type-meta">.bizz-body-sm</span><span class="bizz-body-sm">Body Small -  design systems help teams build consistently</span></div>
+          <div class="type-row"><span class="type-meta">.bizz-label</span><span class="bizz-label">Label text</span></div>
+          <div class="type-row"><span class="type-meta">.bizz-caption</span><span class="bizz-caption">Caption text</span></div>
+          <div class="type-row"><span class="type-meta">.bizz-overline</span><span class="bizz-overline">Overline text</span></div>
+          <div style="padding-top: 1rem; border-top: 1px solid var(--page-border); margin-top: 0.5rem; width: 100%;">
+            <div class="color-row">
+              <span class="color-chip"><span class="color-dot" style="background:var(--bizz-text-primary)"></span>.bizz-text-primary</span>
+              <span class="color-chip"><span class="color-dot" style="background:var(--bizz-text-secondary)"></span>.bizz-text-secondary</span>
+              <span class="color-chip"><span class="color-dot" style="background:var(--bizz-link-primary)"></span>.bizz-text-brand</span>
+              <span class="color-chip"><span class="color-dot" style="background:var(--bizz-text-error)"></span>.bizz-text-error</span>
+              <span class="color-chip"><span class="color-dot" style="background:var(--bizz-support-success)"></span>.bizz-text-success</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- tokens -->
+    <section class="section" id="tokens">
+      <div class="section-header">
+        <h2 class="section-title">Color Tokens <span class="tag-pill">3-layer system</span></h2>
+        <p class="section-desc">5 base colors auto-generate 10 shades each via <code style="font-family:var(--font-mono);font-size:0.85em">color-mix(in oklch)</code>. Semantic tokens map to shades, update a base color above and the entire system retheming instantly.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-preview preview-column" style="padding: 1.5rem 2rem;">
+          <div id="tokenSwatchGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;width:100%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Button -->
+    <section class="section" id="button">
+      <div class="section-header">
+        <h2 class="section-title">Button <span class="tag-pill">&lt;bizz-button&gt;</span></h2>
+        <p class="section-desc">4 variants, 3 sizes, loading state with spinner, full-width mode. Fires <code style="font-family:var(--font-mono);font-size:0.85em">bizz-click</code> (suppressed when disabled or loading).</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-preview" id="btnPreview">
+          <bizz-button id="demoBtn" variant="primary" size="md">Click me</bizz-button>
+        </div>
+        <div class="demo-controls">
+          <div class="ctrl-group">
+            <span class="ctrl-label">Variant</span>
+            <select onchange="setAttr('demoBtn','variant',this.value)">
+              <option>primary</option>
+              <option>secondary</option>
+              <option>danger</option>
+              <option>disabled</option>
+            </select>
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Size</span>
+            <select onchange="setAttr('demoBtn','size',this.value)">
+              <option>sm</option>
+              <option selected>md</option>
+              <option>lg</option>
+            </select>
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Label</span>
+            <input type="text" value="Click me" oninput="document.getElementById('demoBtn').textContent=this.value" />
+          </div>
+          <div class="ctrl-group" style="justify-content:flex-end;gap:0.5rem">
+            <label class="ctrl-toggle">
+              <input type="checkbox" onchange="setBool('demoBtn','disabled',this.checked)" />
+              <span>Disabled</span>
+            </label>
+            <label class="ctrl-toggle">
+              <input type="checkbox" onchange="setBool('demoBtn','loading',this.checked)" />
+              <span>Loading</span>
+            </label>
+            <label class="ctrl-toggle">
+              <input type="checkbox" onchange="setBool('demoBtn','full-width',this.checked)" />
+              <span>Full width</span>
+            </label>
+          </div>
+        </div>
+        <!-- All variants -->
+        <div style="padding:1.25rem 1.5rem;border-top:1px solid var(--page-border);">
+          <p style="font-size:0.7rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--page-text-muted);margin-bottom:0.75rem">All variants</p>
+          <div style="display:flex;flex-wrap:wrap;gap:0.75rem">
+            <bizz-button variant="primary" size="sm">Primary sm</bizz-button>
+            <bizz-button variant="primary" size="md">Primary md</bizz-button>
+            <bizz-button variant="primary" size="lg">Primary lg</bizz-button>
+            <bizz-button variant="secondary">Secondary</bizz-button>
+            <bizz-button variant="danger">Danger</bizz-button>
+            <bizz-button variant="primary" loading>Loading</bizz-button>
+            <bizz-button variant="primary" disabled>Disabled</bizz-button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tag -->
+    <section class="section" id="tag">
+      <div class="section-header">
+        <h2 class="section-title">Tag <span class="tag-pill">&lt;bizz-tag&gt;</span></h2>
+        <p class="section-desc">Semantic status labels. Dismissible variant fires <code style="font-family:var(--font-mono);font-size:0.85em">bizz-dismissed</code>.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-preview" id="tagPreview">
+          <bizz-tag id="demoTag" color="primary" size="md">TypeScript</bizz-tag>
+        </div>
+        <div class="demo-controls">
+          <div class="ctrl-group">
+            <span class="ctrl-label">Color</span>
+            <select onchange="setAttr('demoTag','color',this.value)">
+              <option>primary</option>
+              <option>secondary</option>
+              <option>success</option>
+              <option>warning</option>
+              <option>error</option>
+            </select>
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Size</span>
+            <select onchange="setAttr('demoTag','size',this.value)">
+              <option selected>md</option>
+              <option>sm</option>
+            </select>
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Label</span>
+            <input type="text" value="TypeScript" oninput="document.getElementById('demoTag').textContent=this.value" />
+          </div>
+          <div class="ctrl-group" style="justify-content:flex-end">
+            <label class="ctrl-toggle">
+              <input type="checkbox" onchange="setBool('demoTag','dismissible',this.checked)" />
+              <span>Dismissible</span>
+            </label>
+          </div>
+        </div>
+        <div style="padding:1.25rem 1.5rem;border-top:1px solid var(--page-border);">
+          <p style="font-size:0.7rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--page-text-muted);margin-bottom:0.75rem">All colors</p>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+            <bizz-tag color="primary">Primary</bizz-tag>
+            <bizz-tag color="secondary">Secondary</bizz-tag>
+            <bizz-tag color="success">Success</bizz-tag>
+            <bizz-tag color="warning">Warning</bizz-tag>
+            <bizz-tag color="error">Error</bizz-tag>
+            <bizz-tag color="primary" size="sm" dismissible>Dismissible sm</bizz-tag>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card -->
+    <section class="section" id="card">
+      <div class="section-header">
+        <h2 class="section-title">Card <span class="tag-pill">&lt;bizz-card&gt;</span></h2>
+        <p class="section-desc">Composable card with named slots: <code style="font-family:var(--font-mono);font-size:0.85em">card-media</code>, <code style="font-family:var(--font-mono);font-size:0.85em">card-header</code>, default body, <code style="font-family:var(--font-mono);font-size:0.85em">card-footer</code>. Clickable variant adds hover lift and focus ring.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-preview">
+          <bizz-card id="demoCard" elevation="raised" padding="md" style="width:280px;max-width:100%">
+            <div slot="card-header">
+              <p class="bizz-label" style="color:var(--bizz-text-secondary);margin-bottom:0.25rem">Design System</p>
+              <h4 class="bizz-h4">bizz-components</h4>
+            </div>
+            <p class="bizz-body-sm" style="color:var(--bizz-text-secondary)">Framework-agnostic web component library built with Lit. Works in any framework or plain HTML.</p>
+            <div slot="card-footer" style="display:flex;gap:0.5rem;flex-wrap:wrap">
+              <bizz-tag color="primary" size="sm">Lit</bizz-tag>
+              <bizz-tag color="secondary" size="sm">TypeScript</bizz-tag>
+              <bizz-tag color="success" size="sm">Published</bizz-tag>
+            </div>
+          </bizz-card>
+        </div>
+        <div class="demo-controls">
+          <div class="ctrl-group">
+            <span class="ctrl-label">Elevation</span>
+            <select onchange="setAttr('demoCard','elevation',this.value)">
+              <option>flat</option>
+              <option selected>raised</option>
+            </select>
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Padding</span>
+            <select onchange="setAttr('demoCard','padding',this.value)">
+              <option>none</option>
+              <option>sm</option>
+              <option selected>md</option>
+              <option>lg</option>
+            </select>
+          </div>
+          <div class="ctrl-group" style="justify-content:flex-end">
+            <label class="ctrl-toggle">
+              <input type="checkbox" onchange="setBool('demoCard','clickable',this.checked)" />
+              <span>Clickable</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Input -->
+    <section class="section" id="input">
+      <div class="section-header">
+        <h2 class="section-title">Input <span class="tag-pill">&lt;bizz-input&gt;</span></h2>
+        <p class="section-desc">Full-featured text field with label, helper text, error validation on blur. Supports prefix/suffix icon slots. Fires <code style="font-family:var(--font-mono);font-size:0.85em">bizz-input</code> and <code style="font-family:var(--font-mono);font-size:0.85em">bizz-blur</code>.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-preview">
+          <bizz-input
+            id="demoInput"
+            label="Email address"
+            placeholder="you@example.com"
+            type="email"
+            helper-text="We'll never share your email."
+            style="width:320px;max-width:100%"
+          ></bizz-input>
+        </div>
+        <div class="demo-controls">
+          <div class="ctrl-group">
+            <span class="ctrl-label">Type</span>
+            <select onchange="setAttr('demoInput','type',this.value)">
+              <option>text</option>
+              <option selected>email</option>
+              <option>password</option>
+              <option>number</option>
+              <option>search</option>
+            </select>
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Label</span>
+            <input type="text" value="Email address" oninput="setAttr('demoInput','label',this.value)" />
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Helper text</span>
+            <input type="text" value="We'll never share your email." oninput="setAttr('demoInput','helper-text',this.value)" />
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Error text</span>
+            <input type="text" placeholder="(triggers on blur)" oninput="setAttr('demoInput','error-text',this.value)" />
+          </div>
+          <div class="ctrl-group" style="justify-content:flex-end;gap:0.5rem">
+            <label class="ctrl-toggle">
+              <input type="checkbox" onchange="setBool('demoInput','disabled',this.checked)" />
+              <span>Disabled</span>
+            </label>
+            <label class="ctrl-toggle">
+              <input type="checkbox" onchange="setBool('demoInput','required',this.checked)" />
+              <span>Required</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Textarea -->
+    <section class="section" id="textarea">
+      <div class="section-header">
+        <h2 class="section-title">Textarea <span class="tag-pill">&lt;bizz-textarea&gt;</span></h2>
+        <p class="section-desc">Same API as <code style="font-family:var(--font-mono);font-size:0.85em">&lt;bizz-input&gt;</code>, plus <code style="font-family:var(--font-mono);font-size:0.85em">rows</code> and <code style="font-family:var(--font-mono);font-size:0.85em">auto-resize</code> (grows with content).</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-preview">
+          <bizz-textarea
+            id="demoTextarea"
+            label="Message"
+            placeholder="Write your message…"
+            helper-text="Max 500 characters."
+            rows="3"
+            style="width:320px;max-width:100%"
+          ></bizz-textarea>
+        </div>
+        <div class="demo-controls">
+          <div class="ctrl-group">
+            <span class="ctrl-label">Rows</span>
+            <input type="number" value="3" min="2" max="10" oninput="setAttr('demoTextarea','rows',this.value)" style="width:80px" />
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Label</span>
+            <input type="text" value="Message" oninput="setAttr('demoTextarea','label',this.value)" />
+          </div>
+          <div class="ctrl-group">
+            <span class="ctrl-label">Helper text</span>
+            <input type="text" value="Max 500 characters." oninput="setAttr('demoTextarea','helper-text',this.value)" />
+          </div>
+          <div class="ctrl-group" style="justify-content:flex-end;gap:0.5rem">
+            <label class="ctrl-toggle">
+              <input type="checkbox" onchange="setBool('demoTextarea','disabled',this.checked)" />
+              <span>Disabled</span>
+            </label>
+            <label class="ctrl-toggle">
+              <input type="checkbox" onchange="setBool('demoTextarea','auto-resize',this.checked)" />
+              <span>Auto-resize</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="main.js"></script>
+
+</body>
+</html>

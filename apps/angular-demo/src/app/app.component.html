@@ -1,0 +1,278 @@
+<!-- Header -->
+<header class="header">
+  <div class="header-brand">
+    <span class="logo">bizz-components</span>
+    <span class="badge">Angular demo</span>
+    <span class="badge secondary">v0.2.0</span>
+  </div>
+  <div class="header-actions">
+    <a href="http://localhost:4200" class="stack-link" target="_blank">Vanilla ↗</a>
+    <a href="http://localhost:4201" class="stack-link" target="_blank">React ↗</a>
+    <button class="theme-btn" (click)="toggleTheme()">
+      {{ isDark() ? '☀️ ' : '🌙' }}
+    </button>
+  </div>
+</header>
+
+<div class="token-bar">
+  <span class="token-bar-label">Theme/color tokens</span>
+  <div class="swatches">
+    @for (token of tokens(); track token.prop) {
+      <div class="swatch">
+        <div class="swatch-box" [style.background]="token.color">
+          <input
+            type="color"
+            [value]="token.color"
+            (input)="updateToken(token.prop, $any($event.target).value)"
+            [title]="'Edit ' + token.prop"
+          />
+        </div>
+        <span class="swatch-label">{{ token.label }}</span>
+      </div>
+    }
+  </div>
+  <button class="reset-btn" (click)="resetTokens()">Reset</button>
+</div>
+
+<main class="main">
+  <div class="intro">
+    <h1 class="page-title">Integration</h1>
+    <p class="page-desc">
+      Web components work in Angular with <strong>CUSTOM_ELEMENTS_SCHEMA</strong> on the
+      component/module. Attribute binding uses <strong>[attr]="value"</strong> and custom
+      events use lit standard <strong>(bizz-click)="handler($event)"</strong> syntax.
+    </p>
+  </div>
+
+  <section class="demo-section" id="button">
+    <div class="demo-header">
+      <h2 class="demo-title">
+        Button <code>&lt;bizz-button&gt;</code>
+      </h2>
+      <p class="demo-desc">
+        Angular binds to custom events with standard <code>(bizz-click)="handler($event)"</code>.
+        Boolean attributes use Angular's <code>[attr.disabled]="value || null"</code> pattern
+        to omit the attribute entirely when false.
+      </p>
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-preview">
+        <bizz-button
+          [attr.variant]="buttonVariant()"
+          [attr.size]="buttonSize()"
+          [attr.disabled]="buttonDisabled() || null"
+          [attr.loading]="buttonLoading() || null"
+          [attr.full-width]="buttonFullWidth() || null"
+          (bizz-click)="onBizzClick($event)">
+          {{ buttonLabel() }}
+        </bizz-button>
+
+        @if (buttonLastEvent()) {
+          <span class="event-badge">{{ buttonLastEvent() }}</span>
+        }
+      </div>
+
+      <div class="demo-controls">
+        <label class="ctrl-group">
+          <span>Variant</span>
+          <select [value]="buttonVariant()" (change)="buttonVariant.set($any($event.target).value)">
+            @for (v of buttonVariants; track v) {
+              <option [value]="v">{{ v }}</option>
+            }
+          </select>
+        </label>
+
+        <label class="ctrl-group">
+          <span>Size</span>
+          <select [value]="buttonSize()" (change)="buttonSize.set($any($event.target).value)">
+            @for (s of buttonSizes; track s) {
+              <option [value]="s">{{ s }}</option>
+            }
+          </select>
+        </label>
+
+        <label class="ctrl-group">
+          <span>Label</span>
+          <input type="text" [value]="buttonLabel()" (input)="buttonLabel.set($any($event.target).value)" />
+        </label>
+
+        <div class="ctrl-group ctrl-toggles">
+          <label>
+            <input type="checkbox" [checked]="buttonDisabled()" (change)="buttonDisabled.set($any($event.target).checked)" />
+            Disabled
+          </label>
+          <label>
+            <input type="checkbox" [checked]="buttonLoading()" (change)="buttonLoading.set($any($event.target).checked)" />
+            Loading
+          </label>
+          <label>
+            <input type="checkbox" [checked]="buttonFullWidth()" (change)="buttonFullWidth.set($any($event.target).checked)" />
+            Full width
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section" id="tag">
+    <div class="demo-header">
+      <h2 class="demo-title">Tag <code>&lt;bizz-tag&gt;</code></h2>
+      <p class="demo-desc">
+        Handle it with <code>(bizz-dismissed)="handler()"</code>.
+      </p>
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-preview">
+        @if (tagDismissed()) {
+          <div class="dismissed-msg">
+            Tag dismissed!
+            <button (click)="restoreTag()">Restore</button>
+          </div>
+        } @else {
+          <bizz-tag
+            [attr.color]="tagColor()"
+            [attr.dismissible]="tagDismissible() || null"
+            (bizz-dismissed)="onTagDismissed()"
+          >
+            {{ tagLabel() }}
+          </bizz-tag>
+        }
+      </div>
+
+      <div class="demo-controls">
+        <label class="ctrl-group">
+          <span>Color</span>
+          <select [value]="tagColor()" (change)="tagColor.set($any($event.target).value)">
+            @for (c of tagColors; track c) {
+              <option [value]="c">{{ c }}</option>
+            }
+          </select>
+        </label>
+        <label class="ctrl-group">
+          <span>Label</span>
+          <input type="text" [value]="tagLabel()" (input)="tagLabel.set($any($event.target).value)" />
+        </label>
+        <div class="ctrl-group ctrl-toggles">
+          <label>
+            <input type="checkbox" [checked]="tagDismissible()" (change)="tagDismissible.set($any($event.target).checked)" />
+            Dismissible
+          </label>
+        </div>
+      </div>
+
+      <div class="demo-all-variants">
+        <p class="variants-label">All colors</p>
+        <div class="variants-row">
+          @for (c of tagColors; track c) {
+            <bizz-tag [attr.color]="c">{{ c }}</bizz-tag>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section" id="input">
+    <div class="demo-header">
+      <h2 class="demo-title">Input <code>&lt;bizz-input&gt;</code></h2>
+      <p class="demo-desc">
+        Listen to <code>bizz-input</code> for value changes and <code>bizz-blur</code>
+        for blur events. Access the value via <code>($event as CustomEvent).detail</code>.
+      </p>
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-preview">
+        <bizz-input
+          label="Email address"
+          placeholder="you@example.com"
+          type="email"
+          helper-text="We'll never share your email."
+          [attr.error-text]="inputError() || null"
+          [attr.disabled]="inputDisabled() || null"
+          [attr.required]="inputRequired() || null"
+          (bizz-input)="onBizzInput($event)"
+          (bizz-blur)="onBizzBlur()"
+          style="width: 320px; max-width: 100%"
+        ></bizz-input>
+
+        @if (inputValue()) {
+          <p class="event-badge">Current value: {{ inputValue() }}</p>
+        }
+      </div>
+
+      <div class="demo-controls">
+        <div class="ctrl-group ctrl-toggles">
+          <label>
+            <input type="checkbox" [checked]="inputDisabled()" (change)="inputDisabled.set($any($event.target).checked)" />
+            Disabled
+          </label>
+          <label>
+            <input type="checkbox" [checked]="inputRequired()" (change)="inputRequired.set($any($event.target).checked)" />
+            Required
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section" id="card">
+    <div class="demo-header">
+      <h2 class="demo-title">Card <code>&lt;bizz-card&gt;</code></h2>
+      <p class="demo-desc">
+        Named slots are declared in HTML as <code>slot="card-header"</code>. Angular's template
+        syntax works the same as plain HTML here.
+      </p>
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-preview">
+        <bizz-card
+          [attr.elevation]="cardElevation()"
+          [attr.padding]="cardPadding()"
+          [attr.clickable]="cardClickable() || null"
+          style="width: 280px; max-width: 100%"
+        >
+          <div slot="card-header">
+            <p class="bizz-label" style="color: var(--bizz-text-secondary); margin-bottom: 0.25rem">Design System</p>
+            <h4 class="bizz-h4">bizz-components</h4>
+          </div>
+          <p class="bizz-body-sm" style="color: var(--bizz-text-secondary)">
+            Framework-agnostic web component library built with Lit.
+          </p>
+          <div slot="card-footer" style="display: flex; gap: 0.5rem; flex-wrap: wrap">
+            <bizz-tag color="primary" size="sm">Lit</bizz-tag>
+            <bizz-tag color="secondary" size="sm">TypeScript</bizz-tag>
+            <bizz-tag color="success" size="sm">Published</bizz-tag>
+          </div>
+        </bizz-card>
+      </div>
+
+      <div class="demo-controls">
+        <label class="ctrl-group">
+          <span>Elevation</span>
+          <select [value]="cardElevation()" (change)="cardElevation.set($any($event.target).value)">
+            <option value="flat">flat</option>
+            <option value="raised">raised</option>
+          </select>
+        </label>
+        <label class="ctrl-group">
+          <span>Padding</span>
+          <select [value]="cardPadding()" (change)="cardPadding.set($any($event.target).value)">
+            <option value="none">none</option>
+            <option value="sm">sm</option>
+            <option value="md">md</option>
+            <option value="lg">lg</option>
+          </select>
+        </label>
+        <div class="ctrl-group ctrl-toggles">
+          <label>
+            <input type="checkbox" [checked]="cardClickable()" (change)="cardClickable.set($any($event.target).checked)" />
+            Clickable
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

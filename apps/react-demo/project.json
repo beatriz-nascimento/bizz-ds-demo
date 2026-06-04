@@ -1,0 +1,23 @@
+{
+  "name": "react-demo",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "root": "apps/react-demo",
+  "sourceRoot": "apps/react-demo/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "options": {
+        "outputPath": "dist/apps/react-demo",
+        "configFile": "apps/react-demo/vite.config.ts"
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "options": {
+        "buildTarget": "react-demo:build",
+        "configFile": "apps/react-demo/vite.config.ts"
+      }
+    }
+  }
+}

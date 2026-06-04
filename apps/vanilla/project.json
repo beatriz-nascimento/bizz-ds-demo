@@ -1,0 +1,22 @@
+{
+  "name": "vanilla",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "root": "apps/vanilla",
+  "sourceRoot": "apps/vanilla",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx serve apps/vanilla -p 4200 --no-clipboard"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo 'Vanilla: no build step needed'"
+      },
+      "outputs": []
+    }
+  }
+}
