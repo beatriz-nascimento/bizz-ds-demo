@@ -14,25 +14,29 @@ import type {
   BizzTextareaElement,
 } from 'bizz-components/web';
 
-type WebComponentProps<T extends HTMLElement> = Partial<T> &
-  React.HTMLAttributes<T> & {
+type WebComponentProps<T> = Partial<T> &
+  React.HTMLAttributes<Element> & {
     class?: string;
     style?: React.CSSProperties;
-    // `ref` and `key` are React-internal props not covered by HTMLAttributes.
-    // Without these, TypeScript errors when you pass ref={...} or key={...}
-    // to a custom element.
-    ref?: React.Ref<T> | ((el: T | null) => void);
+    // `ref` uses Element (not T) because bizz-components' type declarations
+    // don't fully satisfy HTMLElement structurally, causing contravariance
+    // errors when T is used directly as the ref callback parameter type.
+    // Using Element as the base type avoids the mismatch while still
+    // working correctly at runtime.
+    ref?: React.Ref<Element> | ((el: Element | null) => void);
     key?: React.Key;
   };
 
 declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'bizz-button':   WebComponentProps<BizzButtonElement>;
-      'bizz-card':     WebComponentProps<BizzCardElement>;
-      'bizz-tag':      WebComponentProps<BizzTagElement>;
-      'bizz-input':    WebComponentProps<BizzInputElement>;
-      'bizz-textarea': WebComponentProps<BizzTextareaElement>;
+  namespace React {
+    namespace JSX {
+      interface IntrinsicElements {
+        'bizz-button':   WebComponentProps<BizzButtonElement>;
+        'bizz-card':     WebComponentProps<BizzCardElement>;
+        'bizz-tag':      WebComponentProps<BizzTagElement>;
+        'bizz-input':    WebComponentProps<BizzInputElement>;
+        'bizz-textarea': WebComponentProps<BizzTextareaElement>;
+      }
     }
   }
 }
