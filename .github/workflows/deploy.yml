@@ -1,0 +1,66 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:   # allow manual trigger from GitHub UI
+
+# Required for the deploy-pages action
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+
+      # React — Vite needs to know the sub-path at build time
+      - name: Build React app
+        run: npx nx build react-demo
+        env:
+          # GitHub Pages serves at /<repo-name>/ so assets must use that base
+          VITE_BASE: /${{ github.event.repository.name }}/react/
+
+      # pass --base-href so the router and asset paths are correct
+      - name: Build Angular app
+        run: >
+          npx nx build angular-demo
+          --base-href=/${{ github.event.repository.name }}/angular/
+
+      # Assemble all builds into a single dist/public/ folder
+      - name: Combine builds
+        run: node scripts/combine.mjs
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

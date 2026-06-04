@@ -1,7 +1,7 @@
 import { Component, signal, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from   '@angular/forms';
 
-// ─── Types (mirrored from bizz-components) ──────────────────────────────────
+// Types (from bizz-components) 
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'disabled';
 type ButtonSize    = 'sm' | 'md' | 'lg';
 type TagColor      = 'primary' | 'secondary' | 'success' | 'warning' | 'error';
@@ -9,9 +9,6 @@ type TagColor      = 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 /**
  * CUSTOM_ELEMENTS_SCHEMA tells Angular's compiler to allow unknown
  * element names (our web components) in templates without errors.
- *
- * Without it, Angular throws:
- *   "bizz-button is not a known element"
  */
 @Component({
   selector: 'app-root',
@@ -22,7 +19,11 @@ type TagColor      = 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  // ── Theme ────────────────────────────────────────────────────────────────
+  // Cross-app navigation
+  readonly isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  readonly vanillaUrl = this.isLocal ? 'http://localhost:4200' : '../';
+  readonly reactUrl   = this.isLocal ? 'http://localhost:4201' : '../react/';
+
   isDark = signal(false);
 
   toggleTheme() {
@@ -31,7 +32,6 @@ export class AppComponent {
     document.body.classList.toggle('dark-page');
   }
 
-  // ── Token customizer ──────────────────────────────────────────────────────
   readonly tokens = signal([
     { prop: '--bizz-primary',   label: 'Primary',   color: '#0f62fe' },
     { prop: '--bizz-secondary', label: 'Secondary', color: '#525252' },
@@ -56,7 +56,7 @@ export class AppComponent {
     this.tokens.set(this.defaultTokens.map(t => ({ ...t })));
   }
 
-  // ── Button demo ───────────────────────────────────────────────────────────
+  // Button demo 
   buttonVariant = signal<ButtonVariant>('primary');
   buttonSize    = signal<ButtonSize>('md');
   buttonLabel   = signal('Click me');
@@ -80,7 +80,7 @@ export class AppComponent {
     console.log('bizz-click detail:', e.detail);
   }
 
-  // ── Tag demo ──────────────────────────────────────────────────────────────
+  // Tag demo
   tagColor       = signal<TagColor>('primary');
   tagLabel       = signal('TypeScript');
   tagDismissible = signal(false);
@@ -96,7 +96,7 @@ export class AppComponent {
     this.tagDismissed.set(false);
   }
 
-  // ── Input demo ────────────────────────────────────────────────────────────
+  // Input demo 
   inputValue    = signal('');
   inputError    = signal('');
   inputDisabled = signal(false);
@@ -113,7 +113,7 @@ export class AppComponent {
     }
   }
 
-  // ── Card demo ─────────────────────────────────────────────────────────────
+  // Card demo
   cardElevation = signal<'flat' | 'raised'>('raised');
   cardPadding   = signal<'none' | 'sm' | 'md' | 'lg'>('md');
   cardClickable = signal(false);

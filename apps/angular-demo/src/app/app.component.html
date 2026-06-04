@@ -6,8 +6,8 @@
     <span class="badge secondary">v0.2.0</span>
   </div>
   <div class="header-actions">
-    <a href="http://localhost:4200" class="stack-link" target="_blank">Vanilla ↗</a>
-    <a href="http://localhost:4201" class="stack-link" target="_blank">React ↗</a>
+    <a [href]="vanillaUrl" class="stack-link" target="_blank">Vanilla ↗</a>
+    <a [href]="reactUrl"   class="stack-link" target="_blank">React ↗</a>
     <button class="theme-btn" (click)="toggleTheme()">
       {{ isDark() ? '☀️ ' : '🌙' }}
     </button>

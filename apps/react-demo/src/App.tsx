@@ -1,6 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
 import './app.css';
 
+const isLocal = () => location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'disabled';
 type ButtonSize    = 'sm' | 'md' | 'lg';
 type TagColor      = 'primary' | 'secondary' | 'success' | 'warning' | 'error';
@@ -272,8 +274,8 @@ export default function App() {
           <span className="badge secondary">v0.2.0</span>
         </div>
         <div className="header-actions">
-          <a href="http://localhost:4200" className="stack-link" target="_blank">Vanilla ↗</a>
-          <a href="http://localhost:4202" className="stack-link" target="_blank">Angular ↗</a>
+          <a href={isLocal() ? 'http://localhost:4200' : '../'} className="stack-link" target="_blank">Vanilla ↗</a>
+          <a href={isLocal() ? 'http://localhost:4202' : '../angular/'} className="stack-link" target="_blank">Angular ↗</a>
           <button className="theme-btn" onClick={toggleTheme}>
             {dark ? '☀️ Light' : '🌙 Dark'}
           </button>

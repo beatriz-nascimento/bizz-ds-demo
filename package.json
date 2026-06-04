@@ -7,7 +7,8 @@
     "serve:react": "nx serve react-demo",
     "serve:angular": "nx serve angular-demo",
     "build": "nx run-many -t build",
-    "build:all": "nx run-many -t build --all"
+    "build:prod": "nx run-many -t build --all && node scripts/combine.mjs",
+    "combine": "node scripts/combine.mjs"
   },
   "dependencies": {
     "bizz-components": "^0.2.0",
