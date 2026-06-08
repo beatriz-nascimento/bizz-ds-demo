@@ -9,3 +9,17 @@
   --font: 'IBM Plex Sans', system-ui, sans-serif;
   --mono: 'IBM Plex Mono', monospace;
 }
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--page-text);
+}
+
+body.dark-page {
+  --page-bg:      #161616;
+  --page-surface: #262626;
+  --page-border:  #393939;
+  --page-text:    #f4f4f4;
+  --page-muted:   #a8a8a8;
+}
