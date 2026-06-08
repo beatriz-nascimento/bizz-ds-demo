@@ -1,0 +1,11 @@
+:root {
+  --bizz-primary:   #0f62fe;
+  --bizz-secondary: #525252;
+  --page-bg:        #f4f4f4;
+  --page-surface:   #ffffff;
+  --page-border:    #e0e0e0;
+  --page-text:      #161616;
+  --page-muted:     #525252;
+  --font: 'IBM Plex Sans', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}

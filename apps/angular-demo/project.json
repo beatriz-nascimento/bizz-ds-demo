@@ -14,7 +14,7 @@
         "polyfills": ["zone.js"],
         "tsConfig": "apps/angular-demo/tsconfig.app.json",
         "assets": [],
-        "styles": [],
+        "styles": ["apps/angular-demo/src/styles.css"],
         "scripts": []
       },
       "configurations": {
