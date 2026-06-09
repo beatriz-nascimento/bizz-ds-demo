@@ -11,7 +11,7 @@
     "combine": "node scripts/combine.mjs"
   },
   "dependencies": {
-    "bizz-components": "^0.2.0",
+    "bizz-components": "^0.3.0",
     "@angular/animations": "^19.2.0",
     "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",

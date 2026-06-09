@@ -269,7 +269,7 @@ export default function App() {
         <div className="header-brand">
           <span className="logo">bizz-components</span>
           <span className="badge">React demo</span>
-          <span className="badge secondary">v0.2.0</span>
+          <span className="badge secondary">v0.3.0</span>
         </div>
         <div className="header-actions">
           <a href={isLocal() ? 'http://localhost:4200' : '../'} className="stack-link" target="_blank">Vanilla ↗</a>
