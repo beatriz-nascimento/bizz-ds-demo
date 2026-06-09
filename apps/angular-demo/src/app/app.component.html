@@ -7,9 +7,30 @@
   <div class="header-actions">
     <a [href]="vanillaUrl" class="stack-link" target="_blank">Vanilla ↗</a>
     <a [href]="reactUrl"   class="stack-link" target="_blank">React ↗</a>
-    <button class="theme-btn" (click)="toggleTheme()">
-      {{ isDark() ? '☀️ ' : '🌙' }}
-    </button>
+    <label for="theme" class="theme">
+      <span class="theme__toggle-wrap">
+        <input
+          id="theme"
+          class="theme__toggle"
+          type="checkbox"
+          role="switch"
+          name="theme"
+          [checked]="isDark()"
+          (change)="toggleTheme()"
+        >
+        <span class="theme__icon">
+          <span class="theme__icon-part"></span>
+          <span class="theme__icon-part"></span>
+          <span class="theme__icon-part"></span>
+          <span class="theme__icon-part"></span>
+          <span class="theme__icon-part"></span>
+          <span class="theme__icon-part"></span>
+          <span class="theme__icon-part"></span>
+          <span class="theme__icon-part"></span>
+          <span class="theme__icon-part"></span>
+        </span>
+      </span>
+    </label>
   </div>
 </header>
 

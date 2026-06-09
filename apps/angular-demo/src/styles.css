@@ -8,6 +8,10 @@
   --page-muted:     #525252;
   --font: 'IBM Plex Sans', system-ui, sans-serif;
   --mono: 'IBM Plex Mono', monospace;
+
+  --transDur: 0.3s;
+  --primary: var(--bizz-primary);
+  --primaryT: transparent;
 }
 
 body {

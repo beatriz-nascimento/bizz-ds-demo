@@ -74,18 +74,14 @@ semanticGroups.forEach(group => {
   tokenGrid.appendChild(groupEl);
 });
 
-// theme toggle 
-let isDark = false;
-
-function toggleTheme() {
-  isDark = !isDark;
+// theme toggle
+document.getElementById('theme').addEventListener('change', function () {
+  const isDark = this.checked;
   document.body.classList.toggle('dark-mode', isDark);
   document.querySelectorAll('.demo-preview').forEach(el => {
     el.classList.toggle('bizz-theme-dark', isDark);
   });
-  document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
-  document.querySelector('.theme-toggle').lastChild.textContent = isDark ? ' Light mode' : ' Dark mode';
-}
+});
 
 // reset tokens 
 function resetTokens() {

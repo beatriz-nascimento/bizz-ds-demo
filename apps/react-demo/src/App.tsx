@@ -3,7 +3,7 @@ import './app.css';
 
 const isLocal = () => location.hostname === 'localhost' || location.hostname === '127.0.0.1';
 
-type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'disabled';
+type ButtonVariant = 'primary' | 'secondary' | 'danger';
 type ButtonSize    = 'sm' | 'md' | 'lg';
 type TagColor      = 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 
@@ -99,7 +99,7 @@ function ButtonDemo() {
           <label className="ctrl-group">
             <span>Variant</span>
             <select value={variant} onChange={e => setVariant(e.target.value as ButtonVariant)}>
-              {(['primary','secondary','danger','disabled'] as ButtonVariant[]).map(v => (
+              {(['primary','secondary','danger'] as ButtonVariant[]).map(v => (
                 <option key={v}>{v}</option>
               ))}
             </select>
@@ -274,9 +274,24 @@ export default function App() {
         <div className="header-actions">
           <a href={isLocal() ? 'http://localhost:4200' : '../'} className="stack-link" target="_blank">Vanilla ↗</a>
           <a href={isLocal() ? 'http://localhost:4202' : '../angular/'} className="stack-link" target="_blank">Angular ↗</a>
-          <button className="theme-btn" onClick={toggleTheme}>
-            {dark ? '☀️ Light' : '🌙 Dark'}
-          </button>
+          <label htmlFor="theme" className="theme">
+            <span className="theme__toggle-wrap">
+              <input
+                id="theme"
+                className="theme__toggle"
+                type="checkbox"
+                role="switch"
+                name="theme"
+                checked={dark}
+                onChange={toggleTheme}
+              />
+              <span className="theme__icon">
+                {Array.from({ length: 9 }).map((_, i) => (
+                  <span key={i} className="theme__icon-part" />
+                ))}
+              </span>
+            </span>
+          </label>
         </div>
       </header>
 
